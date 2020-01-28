@@ -72,7 +72,12 @@
               success: function(html) {
                   $('#resultados').html(html);
 
-                  }
+                  },
+               error: function(XMLHttpRequest, textStatus, errorThrown) { 
+				        
+                    	 M.toast({html: 'Falla en la conexión!'});
+                
+				    } 
                });
           });
       	$("#btn-grafico").click(function(){
@@ -86,7 +91,10 @@
               success: function(html) {
                   $('#resultados').html(html);
 
-                  }
+                  },
+               error: function(XMLHttpRequest, textStatus, errorThrown) { 
+				       M.toast({html: 'Falla en la conexión!'});
+				    } 
                });
           });
       	$("#btn-pie").click(function(){
@@ -100,7 +108,10 @@
               success: function(html) {
                   $('#resultados').html(html);
 
-                  }
+                  },
+               error: function(XMLHttpRequest, textStatus, errorThrown) { 
+				       M.toast({html: 'Falla en la conexión!'});
+				    } 
                });
           });
 
