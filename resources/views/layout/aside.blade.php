@@ -4,7 +4,7 @@
          <div class="collection">
 
 
-	        <form method="post" id="consulta" >
+	        <form method="post"  id="form">
  				{{ csrf_field() }}
  				<div class="">
  					<h5><i class="material-icons left">date_range</i>Periodos</h5>
@@ -35,11 +35,11 @@
 
 		  <div class="row">  
 			  	
-			  <button type="submit"  onclick="submitForm('/relatorio')"  class="blue lighten-1 waves-effect waves-light btn-small s4" ><i class="material-icons left">grid_on</i>Relatorio</button>
+			  <button type="button" id="btn-relatorio"  class="blue lighten-1 waves-effect waves-light btn-small s4" ><i class="material-icons left">grid_on</i>Relatorio</button>
 
-			  <button type="submit" onclick="submitForm('/grafico')" class="blue lighten-1 waves-effect waves-light btn-small s4"><i class="material-icons left">insert_chart</i>Gráfico</button>
+			  <button type="button" id="btn-grafico"  class="blue lighten-1 waves-effect waves-light btn-small s4"><i class="material-icons left">insert_chart</i>Gráfico</button>
 
-			  <button type="submit"  onclick="submitForm('/pie')"  class="blue lighten-1 waves-effect waves-light btn-small s4"><i class="material-icons left">pie_chart</i>Pizza</button>  				
+			  <button  type="button" id="btn-pie"   class="blue lighten-1 waves-effect waves-light btn-small s4"><i class="material-icons left">pie_chart</i>Pizza</button>  				
 		  </div>
 
         </form>
@@ -48,6 +48,9 @@
       </div>
 
 
+   
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script> 
+ 
 <script>
     function submitForm(action)
     {
@@ -55,7 +58,53 @@
         document.getElementById('consulta').submit();
     }
 
-</script>
+//form
+     $(document).ready(function(){
+        
+      $("#btn-relatorio").click(function(){
 
-    
+         //$("#relatorio").text($("#form").serialize());
+         $.ajax({ 
+              url: '{{route('link.relatorio') }}',
+              type: "POST",       
+              dataType: 'html',
+              data: $('#form').serialize(),
+              success: function(html) {
+                  $('#resultados').html(html);
+
+                  }
+               });
+          });
+      	$("#btn-grafico").click(function(){
+
+         //$("#relatorio").text($("#form").serialize());
+         $.ajax({ 
+              url: '{{route('link.grafico') }}',
+              type: "POST",       
+              dataType: 'html',
+              data: $('#form').serialize(),
+              success: function(html) {
+                  $('#resultados').html(html);
+
+                  }
+               });
+          });
+      	$("#btn-pie").click(function(){
+
+         //$("#relatorio").text($("#form").serialize());
+         $.ajax({ 
+              url: '{{route('link.pie') }}',
+              type: "POST",       
+              dataType: 'html',
+              data: $('#form').serialize(),
+              success: function(html) {
+                  $('#resultados').html(html);
+
+                  }
+               });
+          });
+
+    });
  
+
+</script>

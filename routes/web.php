@@ -12,11 +12,11 @@
 */
 
 Route::get('/', 'InicioController@index'); 
-Route::post('/relatorio', 'InicioController@relatorio');
-Route::post('/grafico', 'InicioController@grafico');
-Route::post('/pie', 'InicioController@pie');
-// Route::resource('inicio','InicioController@index'); 
+Route::post('/relatorio', 'InicioController@relatorio')->name('link.relatorio');;
+Route::post('/grafico', 'InicioController@grafico')->name('link.grafico');;
+Route::post('/pie', 'InicioController@pie')->name('link.pie');;
 
+//Solo en caso de colocar la url manual
 Route::get('/relatorio', 'InicioController@index');
 Route::get('/grafico', 'InicioController@index');
 Route::get('/pie', 'InicioController@index');

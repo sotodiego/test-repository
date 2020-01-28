@@ -43,11 +43,11 @@ class InicioController extends Controller
 
             $datos=$relatorio;
             $relatorio    = array("datos");
-            
+           
              if(!empty($result['totals'])){
                 $totales=$result['totals'][$key];
                 $result    = array("totales");
-                return view('welcome', compact(['consultores'],$relatorio,$result));
+               return view('relatorio', compact($relatorio,$result));
             }else{
                 return redirect('/');
             }             
@@ -78,7 +78,7 @@ class InicioController extends Controller
             $result[++$idx] = ['type' => 'spline', 'name' => 'Custo Fixo Médio', 'data' => array_fill(0, 12, $promedio->avg * 1.0)];
                        
              
-            return view('welcome', compact(['consultores'],['result']));
+            return view('grafico', compact(['result']));
     }
 
     public function pie(Request $request)
@@ -86,7 +86,7 @@ class InicioController extends Controller
         $consultores= $this->consultores();     
         $users = str_replace(['[', ']'], '', json_encode($request->users));
         $pie = DB::select("SELECT (SELECT no_usuario FROM cao_usuario WHERE co_usuario=g.co_usuario) name,sum(recliq) y FROM grafico g WHERE co_usuario IN ($users) GROUP BY co_usuario");
-           return view('welcome', compact(['consultores'],['pie']));
+           return view('grafico', compact(['pie']));
     }
 
     public function consultores(){
