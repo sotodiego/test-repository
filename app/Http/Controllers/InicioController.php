@@ -85,7 +85,7 @@ class InicioController extends Controller
     {
         $consultores= $this->consultores();     
         $users = str_replace(['[', ']'], '', json_encode($request->users));
-        $pie = DB::select("SELECT (SELECT no_usuario FROM cao_usuario WHERE co_usuario=g.co_usuario) name,sum(recliq) y FROM grafico g WHERE co_usuario IN ($users) GROUP BY co_usuario");
+        $pie = DB::select("SELECT (SELECT no_usuario FROM cao_usuario WHERE co_usuario=g.co_usuario) name,sum(recliq) y FROM grafico g WHERE co_usuario IN ($users) AND period BETWEEN $request->fecha1 AND $request->fecha2  GROUP BY co_usuario");
            return view('grafico', compact(['pie']));
     }
 
