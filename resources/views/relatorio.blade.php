@@ -1,41 +1,40 @@
+
  <div class="row" >
-           <h3 class="my-2">Relatorio</h3>
-            <table class="responsive-table">
-              <thead>
-                <tr style="background-color: #42a5f5">
+                              
+    @foreach($result['rows'] as $rows=>$val)  
+           
+            <table class="responsive-table container" style="margin: 15px">
+              <thead> 
+               <tr style="background-color: #42a5f5">       
+                  <th colspan="5">{{$rows}}</th>             
+                </tr>              
+                <tr style="background-color: #42a5f5">                    
                      <th>Período</th>
                      <th>Receita Líquida</th>
                      <th>Custo Fixo</th>
                      <th>Comissão</th>
                      <th>Lucro</th>
-                </tr>
+                </tr>               
               </thead>
-
-              <tbody>
-
-              @foreach($datos as $d) 
-                    <tr >
-                      <td>{{$d->period}}</td>
-                      <td>{{$d->recliq}}</td>
-                      <td>{{$d->bruto}}</td>
-                      <td>{{$d->comision}}</td>
-                      <td>{{$d->beneficio}}</td>
-                    </tr>
-
-               @endforeach
-
-                  @if (!empty($totales))
-                    <tr>                    
-                        <td style="background-color: #42a5f5">Saldo</td>                     
-                        @foreach($totales as $value)                     
-                         <td style="background-color: #42a5f5">{{$value}}</td>                      
-                        @endforeach
-                     
-                    </tr>
+              <tbody>    
+                  @foreach ($val as $row)
+                            <tr>                             
+                              <td>{{$row->period}}</td>
+                              <td>{{$row->recliq}}</td>
+                              <td>{{$row->bruto}}</td>
+                              <td>{{$row->comision}}</td>
+                              <td>{{$row->beneficio}}</td>
+                            </tr>
+                  @endforeach 
+                             <tr>                
+                                <td style="background-color: #42a5f5">Saldo</td>
+                                @foreach($result['totals'][$rows] as $total)  
+                                <td>{{$total}}</td>
+                                @endforeach 
+                             </tr>
                  
-
-                  @endif
               </tbody>
-            </table>
-                    
+            </table>  
+        @endforeach    
+                          
   </div>

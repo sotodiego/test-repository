@@ -20,14 +20,14 @@ class InicioController extends Controller
 
     public function relatorio(Request $request)
     {
-        $consultores= $this->consultores();
+        //$consultores= $this->consultores();
      
         $users = str_replace(['[', ']'], '', json_encode($request->users));
-        $relatorio = DB::select("SELECT co_usuario,period,round(recliq,2) recliq,bruto,round(comision,2) comision,round(round(recliq,2)-(bruto+round(comision,2)),2) beneficio FROM relatorio WHERE (period BETWEEN $request->fecha1 AND $request->fecha2) AND co_usuario IN ($users)");
+        $relatorio = DB::select("SELECT (SELECT no_usuario FROM cao_usuario WHERE co_usuario=r.co_usuario) name,co_usuario,period,round(recliq,2) recliq,bruto,round(comision,2) comision,round(round(recliq,2)-(bruto+round(comision,2)),2) beneficio FROM relatorio r WHERE (period BETWEEN $request->fecha1 AND $request->fecha2) AND co_usuario IN ($users)");
 
             $result['rows'] = [];
              foreach ($relatorio as $rel) {
-               $result['rows'][$rel->co_usuario][] = $rel;
+               $result['rows'][$rel->name][] = $rel;
             }
              foreach ($result['rows'] as $key => $value) {
                  $initial = ['liq' => 0.0, 'costo' => 0.0, 'com' => 0.0, 'lucro' => 0.0];
@@ -41,16 +41,16 @@ class InicioController extends Controller
                   $result['totals'][$key] = $sum;
             }
 
-            $datos=$relatorio;
-            $relatorio    = array("datos");
-           
-             if(!empty($result['totals'])){
-                $totales=$result['totals'][$key];
-                $result    = array("totales");
-               return view('relatorio', compact($relatorio,$result));
-            }else{
-                return redirect('/');
-            }             
+           // $datos=$relatorio;
+          //  $relatorio    = array("datos");
+             //return view('relatorio', compact(['relatorio']));
+
+
+           //  return view('relatorio', compact(['relatorio']));
+               //dd($result);
+
+              return view('relatorio', compact(['result']));
+                    
                 
              
     }
